@@ -1,3 +1,5 @@
+// MAZE 1
+
 const count = 15;
 const listSuku = dapatkanKumpulanSuku(count, 1, 4);
 const listSuku2 = dapatkanKumpulanSuku(count,3, 4);
@@ -15,19 +17,19 @@ for (let i = 1; i <= count; i++) {
             else column += `@`;
         }
     }
-    
+
     console.log(column, i)
 }
 
-function dapatkanKumpulanSuku (maxValue, a, b) {
-    let list = [];
-    let i = 1;
-    let stop = false;
-    while (stop === false) {
-        let result = (a + (i++ - 1) * b);
-        if (result <= maxValue) list.push(result);
-        else stop = true
-    };
+function dapatkanKumpulanSuku(limit, a, b) {
+  let list = [];
+  let i = 1;
+  let stop = false;
+  while (stop === false) {
+    let result = a + (i++ - 1) * b;
+    if (result <= limit ) list.push(result);
+    else stop = true;
+  }
 
-    return list
+  return list;
 }
