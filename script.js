@@ -106,7 +106,8 @@ const filRight = Math.min(...fil2);
 // DIKIT LAGI 
 for (let index = 1; index <= count; index++) {
   const genap = index % 2 === 0 ? true : false;
-  let index2 = genap ? sukuList.indexOf(index - 1) : sukuList.indexOf(index);
+  let tambah = sukuTengah < index ? (index + 1) : (index - 1);
+  let index2 = genap ? sukuList.indexOf(tambah) : sukuList.indexOf(index);
   const fil = removeDuplicateArray(
     sukuValue
       .filter((value) => sukuValue[index2] >= value)
