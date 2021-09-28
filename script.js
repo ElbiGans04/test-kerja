@@ -26,7 +26,7 @@ function dapatkanKumpulanSuku(limit, a, b) {
   let stop = false;
   while (stop === false) {
     let result = a + (i++ - 1) * b;
-    if (b < 0 ) {
+    if (b < 0) {
       if (result >= limit) list.push(result);
       else stop = true;
     } else {
@@ -34,61 +34,109 @@ function dapatkanKumpulanSuku(limit, a, b) {
       else stop = true;
     }
 
-     if (i === 100) stop = true;
+    if (i === 100) stop = true;
   }
 
   return list;
 }
 
-function removeDuplicateArray (array) {
-  return array.filter((arrayItem, index) => array.indexOf(arrayItem) == index)
+function removeDuplicateArray(array) {
+  return array.filter((arrayItem, index) => array.indexOf(arrayItem) == index);
 }
-
 
 // Panjang list suku harus genap
 const sukuList = dapatkanKumpulanSuku(count, 1, 2);
-const sukuTengah = sukuList.length % 2 === 0 ? sukuList[sukuList.length / 2] : null;
-const sukuTengah2 = sukuList.length % 2 === 0 ? sukuList[(sukuList.length / 2) - 1] : null;
+const sukuTengah =
+  sukuList.length % 2 === 0 ? sukuList[sukuList.length / 2] : null;
+const sukuTengah2 =
+  sukuList.length % 2 === 0 ? sukuList[sukuList.length / 2 - 1] : null;
 // Nilai
-const sukuValue = [...dapatkanKumpulanSuku(sukuTengah, 3, 2 ), ...dapatkanKumpulanSuku(1, sukuTengah2, - 2 )]
-const sukuValue2 = [...dapatkanKumpulanSuku(sukuTengah, count, -2 ), ...dapatkanKumpulanSuku(count, sukuTengah, 2 )];
+const sukuValue = [
+  ...dapatkanKumpulanSuku(sukuTengah, 3, 2),
+  ...dapatkanKumpulanSuku(1, sukuTengah2, -2),
+];
+const sukuValue2 = [
+  ...dapatkanKumpulanSuku(sukuTengah, count, -2),
+  ...dapatkanKumpulanSuku(count, sukuTengah, 2),
+];
 
-// Simulasi 
+// Simulasi
 // Misal index 1,3,5
 // Mencari bagian sukuValue.slice(0, sukuList.indexOf(5) + 1)
-// Jika 
+// Jika
 // Suku Ganjil
 // [
-  //   1,  3,  5,  7,
-  //   9, 11, 13, 15
-  // ] 
-  //  Nilai Suku 
-  // [
-    //   3, 5, 7, 9,
-    //   7, 5, 3, 1
-    // ]
+//   1,  3,  5,  7,
+//   9, 11, 13, 15
+// ]
 
 
 // pecah lagi
 // UNTUK GANJIL SUDAH BENAR
 const index = 1;
 const genap = index % 2 === 0 ? true : false;
-const fil = removeDuplicateArray(sukuValue.filter((value) => sukuValue[index] >= value).sort((a, b) => a - b));
-const fil2 = removeDuplicateArray(sukuValue2.filter((value) => sukuValue2[index] <= value).sort((a,b) => a-b));
+const fil = removeDuplicateArray(
+  sukuValue.filter((value) => sukuValue[index] >= value).sort((a, b) => a - b)
+);
+const fil2 = removeDuplicateArray(
+  sukuValue2.filter((value) => sukuValue2[index] <= value).sort((a, b) => a - b)
+);
 // Nilai batas kiri terbesar
 const filLeft = Math.max(...fil);
 // Nilai batas kanan terkecil
-const filRight = Math.min(...fil2)
+const filRight = Math.min(...fil2);
 
-// Check isi
-let column = ``;
-for (let i = 1; i <= count; i++) {
-  if (fil.includes(i) || fil2.includes(i)) column += `@`
-  else {
-    if((i > filLeft && i < filRight)) column += `@`
-    else column += ' '
-  }
-}
+// // Check isi
+// let column = ``;
+// for (let i = 1; i <= count; i++) {
+//   if (fil.includes(i) || fil2.includes(i)) column += `@`;
+//   else {
+//     // Ganjil
+//     if (i > filLeft && i < filRight) column += `@`;
+//     else column += " ";
+//     // Genap
+//     // if((i > filLeft && i < filRight)) column += ` `
+//     // else column += ' '
+//   }
+// }
 // console.log(column)
 
 
+// check genap
+// DIKIT LAGI 
+for (let index = 1; index <= count; index++) {
+  const genap = index % 2 === 0 ? true : false;
+  let index2 = genap ? sukuList.indexOf(index - 1) : sukuList.indexOf(index);
+  const fil = removeDuplicateArray(
+    sukuValue
+      .filter((value) => sukuValue[index2] >= value)
+      .sort((a, b) => a - b)
+  );
+  const fil2 = removeDuplicateArray(
+    sukuValue2
+      .filter((value) => sukuValue2[index2] <= value)
+      .sort((a, b) => a - b)
+  );
+
+  // Nilai batas kiri terbesar
+  const filLeft = Math.max(...fil);
+  // Nilai batas kanan terkecil
+  const filRight = Math.min(...fil2);
+  let column = ``;
+  for (let i = 1; i <= count; i++) {
+    if (fil.includes(i) || fil2.includes(i)) column += `@`;
+    else {
+      if (!genap) {
+        // Ganjil
+        if (i > filLeft && i < filRight) column += `@`;
+        else column += " ";
+      } else {
+        // Genap
+        if((i > filLeft && i < filRight)) column += ` `
+        else column += ' '
+      }
+    }
+  }
+  console.log(column)
+  // console.log(index, fil, fil2)
+}
