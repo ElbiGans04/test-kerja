@@ -51,7 +51,7 @@ const sukuTengah = sukuList.length % 2 === 0 ? sukuList[sukuList.length / 2] : n
 const sukuTengah2 = sukuList.length % 2 === 0 ? sukuList[(sukuList.length / 2) - 1] : null;
 // Nilai
 const sukuValue = [...dapatkanKumpulanSuku(sukuTengah, 3, 2 ), ...dapatkanKumpulanSuku(1, sukuTengah2, - 2 )]
-const sukuValue2 = [...dapatkanKumpulanSuku(sukuTengah, count, -2 ), ...dapatkanKumpulanSuku(count, sukuTengah, 2 )]
+const sukuValue2 = [...dapatkanKumpulanSuku(sukuTengah, count, -2 ), ...dapatkanKumpulanSuku(count, sukuTengah, 2 )];
 
 // Simulasi 
 // Misal index 1,3,5
@@ -67,8 +67,12 @@ const sukuValue2 = [...dapatkanKumpulanSuku(sukuTengah, count, -2 ), ...dapatkan
     //   3, 5, 7, 9,
     //   7, 5, 3, 1
     // ]
+
+
 // pecah lagi
+// UNTUK GANJIL SUDAH BENAR
 const index = 1;
+const genap = index % 2 === 0 ? true : false;
 const fil = removeDuplicateArray(sukuValue.filter((value) => sukuValue[index] >= value).sort((a, b) => a - b));
 const fil2 = removeDuplicateArray(sukuValue2.filter((value) => sukuValue2[index] <= value).sort((a,b) => a-b));
 // Nilai batas kiri terbesar
@@ -81,9 +85,10 @@ let column = ``;
 for (let i = 1; i <= count; i++) {
   if (fil.includes(i) || fil2.includes(i)) column += `@`
   else {
-    if(i > filLeft && i < filRight) column += `@`
+    if((i > filLeft && i < filRight)) column += `@`
     else column += ' '
   }
 }
-console.log(column)
+// console.log(column)
+
 
